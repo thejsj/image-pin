@@ -1,0 +1,24 @@
+<div class="home" ng-controller='HomeController as home'>
+  <div class='container-fluid'>
+    <div class='row header'>
+      <div class='col-md-4 col-sm-6'>
+        <h1 class='main-title'>
+          <a href='/'>App Name Here</a>
+        </h1>
+      </div>
+      <div class='col-md-2 col-sm-6 col-md-offset-5'>
+        <button class='btn btn-default'>
+          <a href='/'>Logout</a>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class='container-fluid'>
+    <div ng-repeat="image in home.images">
+      <p>Hello</p>
+    </div>
+  </div>
+  <button class='add-image-button btn btn-primary' ng-click='home.addImage()'>
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+  </button>
+</div>
