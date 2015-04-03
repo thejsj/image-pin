@@ -26,8 +26,6 @@ if (config.get('ports').http === '80') {
   callbackURL = 'http://' + config.get('url') + '/api/auth/login/callback';
 }
 
-callbackURL.log();
-
 passport.use(new GitHubStrategy({
     clientID: config.get('github').clientID,
     clientSecret: config.get('github').clientSecret,

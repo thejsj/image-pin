@@ -10,15 +10,29 @@ var path = require('path');
 
 gulp.task('js', function () {
   gulp.src([
+      // Angular
       './client/lib/angular/angular.js',
+      // UI Bootrap and UI Router
       './client/lib/angular-bootstrap/ui-bootstrap.js',
       './client/lib/angular-bootstrap/ui-bootstrap-tpls.js',
       './client/lib/ui-router/release/angular-ui-router.js',
+      // Masonry
+      './client/lib/jquery/dist/jquery.min.js',
+      './client/lib/jquery-bridget/jquery.bridget.js',
+      './client/lib/imagesloaded/imagesloaded.pkgd.min.js',
+      './client/lib/masonry/dist/masonry.pkgd.min.js',
+      './client/lib/angular-masonry/angular-masonry.js',
+      // Bind Table
+      './client/lib/angular-socket-io/socket.js',
+      './client/lib/BindTable/bindtable.js',
+      // Services
       './client/app/services/auth-factory.js',
+      './client/app/services/image-factory.js',
+      // Controllers
       './client/app/home/home.js',
       './client/app/templates/add-image.js',
       './client/app/app.js',
-      './client/lib/ngSocket/dist/ngSocket.js',
+      // File Upload
       './client/lib/ng-file-upload/angular-file-upload.js',
     ])
     .pipe(concat('main.js'))

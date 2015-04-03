@@ -4,7 +4,6 @@
 var authController = {};
 
 authController.getUser = function (req, res) {
-  console.log('getUser');
   if (req.user && req.user.id) {
     res.json({
       userId: req.user.id,

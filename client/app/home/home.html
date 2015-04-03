@@ -13,9 +13,15 @@
       </div>
     </div>
   </div>
-  <div class='container-fluid'>
-    <div ng-repeat="image in home.images">
-      <p>Hello</p>
+  <div masonry>
+    <div class="masonry-brick image-container" ng-repeat="image in home.images">
+      <div ng-if="image.base64">
+        <img
+          class='main-image'
+          data-ng-src='data:{{ image.type }};base64,{{ image.base64 }}'
+         />
+      </div>
+      <p>{{ image.title }}</p>
     </div>
   </div>
   <button class='add-image-button btn btn-primary' ng-click='home.addImage()'>

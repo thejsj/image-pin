@@ -20,6 +20,9 @@
     "bootstrap-sass-official": "~3.3.4",
     "ngSocket": "~0.2.1",
     "ui-bootstrap": "~0.12.1",
-    "angular-bootstrap": "~0.12.1"
+    "angular-bootstrap": "~0.12.1",
+    "BindTable": "git@github.com:knowthen/BindTable.git",
+    "angular-socket-io": "~0.7.0",
+    "angular-masonry": "~0.11.0"
   }
 }

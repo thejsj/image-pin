@@ -3,10 +3,13 @@
   'use strict';
   angular.module('imagePin', [
       'ui.router',
+      'wu.masonry',
       'angularFileUpload',
+      'btford.socket-io',
+      'bindtable',
       'imagePin.services',
       'imagePin.home',
-      'ngSocket'
+      // 'ngSocket'
     ])
     .config(function ($stateProvider, $urlRouterProvider) {
       $urlRouterProvider.otherwise('/');

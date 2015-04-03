@@ -6,3 +6,16 @@
   height: 50px;
   width: 50px;
 }
+
+.image-container {
+  // margin-top: 5px;
+  border: solid 1px $gray;
+  border-radius: 5px;
+  // padding: 5px;
+  width: 24%;
+
+  .main-image {
+    max-width: 100%;
+    max-height: 100%;
+  }
+}

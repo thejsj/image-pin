@@ -12,7 +12,7 @@ var r = require('../../db');
 var imageDownload = function (req, res) {
   var id = req.params.id;
   r
-    .table('photos')
+    .table('images')
     .get(id)
     .run(r.conn)
     .then(function (result) {
@@ -23,23 +23,25 @@ var imageDownload = function (req, res) {
 
 var imageCreate = function (req, res) {
   if (req.body.image) {
-    if (!checkType(req.body.image.type)) {
+    var image = req.body.image;
+    if (!checkType(image.type)) {
       res.status(400).json({
         'error': 'imageError',
         'message': 'Only JPEG/PNG/GIF allowed'
       });
       return;
     }
-    if (req.body.image.size > 800000) {
+    if (image.size > 800000) {
       res.status(400).json({
         'error': 'sizeError',
         'message': 'Image must be uner 800kb'
       });
       return;
     }
+    image.createdAt = new Date();
     r
-      .table('photos')
-      .insert(req.body.image)
+      .table('images')
+      .insert(image)
       .run(r.conn)
       .then(function (query_result) {
         res.json( {
@@ -50,7 +52,7 @@ var imageCreate = function (req, res) {
 };
 
 var deleteImage = function (id) {
-  return r.table('photos')
+  return r.table('images')
     .get(id)
     .delete()
     .run(r.conn);
@@ -60,28 +62,13 @@ var imageUpdate = function (req, res) {
   var form = new multiparty.Form();
   form.parse(req, function (err, fields, files) {
     var imagePath = files.file[0].path;
-    var imageId = fields.id[0];
-
-    if (imagePath) {
-      imageToAscii({
-        path: imagePath,
-        size: {
-          width: 200,
-          height: '100%'
-        }
-      }, function(err, converted) {
-        console.log('Inserting Image:', new Date().toString());
-        console.log(err || converted);
-      });
-    }
-
+    var imageId = JSON.parse(fields.data[0]).id;
     fs.readFile(imagePath, function (err, buffer) {
       var image = r.binary(buffer);
-      r.table('photos')
+      r.table('images')
        .get(imageId)
        .update({
          file: image,
-         path: imagePath
        })
        .run(r.conn)
        .then(function (query_result) {

@@ -9,7 +9,7 @@ r.connections = [];
 r.getNewConnection = function () {
   return r.connect(config.get('rethinkdb'))
     .then(function (conn) {
-      conn.use('realtime_photo_sharing');
+      conn.use(config.get('rethinkdb').db);
       r.connections.push(conn);
       return conn;
     });
@@ -19,19 +19,28 @@ r.connect(config.get('rethinkdb'))
   .then(function (conn) {
     r.conn = conn;
     r.connections.push(conn);
-    return r.dbCreate('realtime_photo_sharing').run(r.conn)
+    return r.dbCreate(config.get('rethinkdb').db).run(r.conn)
       .then(function () {})
       .catch(function () {})
       .then(function () {
-        r.conn.use('realtime_photo_sharing');
+        r.conn.use(config.get('rethinkdb').db);
         // Create Tables
         return r.tableList().run(r.conn)
           .then(function (tableList) {
             return q()
               .then(function() {
-                if (tableList.indexOf('photos') === -1) {
-                  return r.tableCreate('photos').run(r.conn);
+                if (tableList.indexOf('images') === -1) {
+                  return r.tableCreate('images').run(r.conn);
                 }
+              })
+              .then(function () {
+                return r.table('images').indexList().run(r.conn);
+              })
+              .then(function (indexList) {
+                if (indexList.indexOf('createdAt')) {
+                  return r.table('images').indexCreate('createdAt').run(r.conn);
+                }
+                return true;
               })
               .then(function () {
                 if (tableList.indexOf('users') === -1) {

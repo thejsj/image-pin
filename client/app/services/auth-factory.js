@@ -2,7 +2,13 @@
 (function () {
   'use strict';
   angular.module('imagePin.services', [])
-    .factory('AuthFactory', AuthFactory);
+    .factory('AuthFactory', AuthFactory)
+    .factory('socket', function(socketFactory){
+      return socketFactory();
+    })
+    .factory('bindTable', function(bindTableFactory, socket){
+      return bindTableFactory({socket: socket});
+    });
 
   AuthFactory.$inject = ['$http', '$state', '$q'];
 
@@ -10,8 +16,6 @@
 
     var factory = {
       userId: null,
-      // userName: null,
-      // githubAvatarUrl: null,
       isLoggedIn: isLoggedIn,
       getUserName: getUserName
     };
