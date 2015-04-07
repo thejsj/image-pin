@@ -15,6 +15,12 @@ r.getNewConnection = function () {
     });
 };
 
+var createIfDoesntExist = function (query) {
+  return query
+    .run(r.conn)
+    .catch(function () {});
+};
+
 r.connect(config.get('rethinkdb'))
   .then(function (conn) {
     r.conn = conn;
@@ -25,36 +31,21 @@ r.connect(config.get('rethinkdb'))
       .then(function () {
         r.conn.use(config.get('rethinkdb').db);
         // Create Tables
-        return r.tableList().run(r.conn)
-          .then(function (tableList) {
-            return q()
-              .then(function() {
-                if (tableList.indexOf('images') === -1) {
-                  return r.tableCreate('images').run(r.conn);
-                }
-              })
-              .then(function () {
-                return r.table('images').indexList().run(r.conn);
-              })
-              .then(function (indexList) {
-                if (indexList.indexOf('createdAt')) {
-                  return r.table('images').indexCreate('createdAt').run(r.conn);
-                }
-                return true;
-              })
-              .then(function () {
-                if (tableList.indexOf('users') === -1) {
-                  return r.tableCreate('users').run(r.conn);
-                }
-              })
-              .then(function () {
-                return r.table('users').indexList().run(r.conn)
-                  .then(function (indexList) {
-                    if (indexList.indexOf('login') === -1) {
-                      return r.table('users').indexCreate('login').run(r.conn);
-                    }
-                  });
-              });
+        q()
+          .then(function () {
+            return r.tableCreate('images').then(createIfDoesntExist);
+          })
+          .then(function () {
+            return r.table('images').indexCreate('createdAt').then(createIfDoesntExist);
+          })
+          .then(function () {
+            return r.tableCreate('users').then(createIfDoesntExist);
+          })
+          .then(function () {
+            return r.table('users').indexCreate('login').then(createIfDoesntExist);
+          })
+          .then(function () {
+            return r.tableCreate('likes').then(createIfDoesntExist);
           });
       });
   });

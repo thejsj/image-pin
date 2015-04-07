@@ -17,6 +17,7 @@
 
     function uploadImage (userId, title, fileObj) {
       var file = fileObj[0];
+      console.log('UserId: ', userId);
       return $http.post('/api/image', {
         image: {
           type: file.type,

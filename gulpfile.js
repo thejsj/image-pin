@@ -10,6 +10,8 @@ var path = require('path');
 
 gulp.task('js', function () {
   gulp.src([
+      // Lodash
+      './client/lib/lodash/lodash.js',
       // Angular
       './client/lib/angular/angular.js',
       // UI Bootrap and UI Router
@@ -30,6 +32,9 @@ gulp.task('js', function () {
       './client/app/services/image-factory.js',
       // Controllers
       './client/app/home/home.js',
+      './client/app/user/user.js',
+      './client/app/single/single.js',
+      './client/app/templates/header.js',
       './client/app/templates/add-image.js',
       './client/app/app.js',
       // File Upload

@@ -1,0 +1,46 @@
+<div class="home" ng-controller='UserController as user'>
+  <div class='container-fluid'>
+    <div class='row header'>
+      <div class='col-md-4 col-sm-6'>
+        <h1 class='main-title'>
+          <a ui-sref='home()'>App Name Here</a>
+        </h1>
+      </div>
+      <div class='col-md-2 col-sm-6 col-md-offset-5'>
+        <button class='btn btn-default'>
+          <a href='/api/auth/logout'>Logout</a>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div masonry>
+    <div class="masonry-brick image-container-container" ng-repeat="image in user.images">
+      <div class="image-container">
+        <div ng-if="image.base64">
+          <img
+            class='main-image'
+            data-ng-src='data:{{ image.type }};base64,{{ image.base64 }}'
+           />
+        </div>
+        <div class='meta-data'>
+            <p>{{ image.title }}</p>
+            <a ng-click='user.likePin(image)'>
+              <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+            </a>
+            <a ng-click='user.addPin(image)'>
+              <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            </a>
+        </div>
+        <a ui-sref='user({ userId: image.user.id })'>
+          <div class='user-box'>
+            <img class='user-avatar' ng-src='{{ image.user.avatarUrl }}' />
+            <p class='user-login'>{{ image.user.login }}</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <button class='add-image-button btn btn-primary' ng-click='user.addImage()'>
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+  </button>
+</div>

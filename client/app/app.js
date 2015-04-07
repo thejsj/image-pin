@@ -9,7 +9,9 @@
       'bindtable',
       'imagePin.services',
       'imagePin.home',
-      // 'ngSocket'
+      'imagePin.user',
+      'imagePin.single',
+      'imagePin.header',
     ])
     .config(function ($stateProvider, $urlRouterProvider) {
       $urlRouterProvider.otherwise('/');
@@ -34,6 +36,20 @@
         .state('home', {
           url: '/',
           templateUrl: '/app/home/home.html',
+          resolve: {
+            authenticated: authenticated
+          }
+        })
+        .state('single', {
+          url: '/single/:id',
+          templateUrl: '/app/single/single.html',
+          resolve: {
+            authenticated: authenticated
+          }
+        })
+        .state('user', {
+          url: '/user/:userId',
+          templateUrl: '/app/user/user.html',
           resolve: {
             authenticated: authenticated
           }

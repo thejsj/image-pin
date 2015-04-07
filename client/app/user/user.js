@@ -1,17 +1,17 @@
-/*global angular:true, Blob: true, FileReader: true, _:global */
+/*global angular:true, Blob: true, FileReader: true */
 
 (function () {
   'use strict';
-  angular.module('imagePin.home', ['ui.bootstrap'])
-    .controller('HomeController', HomeController);
+  angular.module('imagePin.user', ['ui.bootstrap'])
+    .controller('UserController', UserController);
 
-  HomeController.$inject = ['$scope', '$modal', 'bindTable', '$log', 'AuthFactory'];
+  UserController.$inject = ['$scope', '$modal', 'bindTable', '$log'];
 
-  function HomeController($scope, $modal, bindTable, $log, AuthFactory) {
+  function UserController($scope, $modal, bindTable, $log) {
     var vm = this;
     var imagesTable = bindTable('images');
-    imagesTable.bind(null, 100);
-    window.imagesTable = imagesTable;
+    imagesTable.bind({ userId:  "f5b6be61-46f3-4e05-964f-379350404440" }, 100);
+
     vm.images = imagesTable.rows;
     vm.delete = imagesTable.delete;
 
@@ -35,26 +35,6 @@
           }(key));
         }
       });
-    };
-
-    vm.likePin = function (imageId) {
-      console.log('Like Pin', imageId);
-      AuthFactory.getUserName()
-        .then(function (user) {
-          var imageIndex = _.findIndex(vm.images, {'id': imageId});
-          if (!_.contains(vm.images[imageIndex].likes, user.userId)) {
-            vm.images[imageIndex].likes.push(user.userId);
-            imagesTable.update(vm.images[imageIndex]);
-          }
-      });
-    };
-
-    vm.addPin = function (imageId) {
-      console.log('Add Pin', imageId);
-      AuthFactory.getUserName()
-        .then(function (user) {
-          console.log(user.userId);
-        });
     };
 
     vm.addImage = function () {

@@ -39,6 +39,7 @@ var imageCreate = function (req, res) {
       return;
     }
     image.createdAt = new Date();
+    image.likes = [];
     r
       .table('images')
       .insert(image)

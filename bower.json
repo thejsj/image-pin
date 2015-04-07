@@ -23,6 +23,7 @@
     "angular-bootstrap": "~0.12.1",
     "BindTable": "git@github.com:knowthen/BindTable.git",
     "angular-socket-io": "~0.7.0",
-    "angular-masonry": "~0.11.0"
+    "angular-masonry": "~0.11.0",
+    "lodash": "~3.6.0"
   }
 }
