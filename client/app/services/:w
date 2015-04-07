@@ -20,26 +20,22 @@
       return new Promise(function (resolve, reject) {
         var reader = new FileReader();
         reader.onload = function (evt) {
-          var img = new Image();
-          img.src = evt.target.result;
-          var width = img.width;
-          var height = img.height;
-          resolve({
-              width: width,
-              height: height
-          });
-        };
-        reader.readAsDataURL(file);
+        var img = new Image();
+        img.src = evt.target.result;
+        var width = img.width;
+        var height = img.height;
+        resolve([width, height]);
        })
-       .then(function (dimensions) {
+       .then(function (width, height) {
+         conwole.log(width, height);
          return $http.post('/api/image', {
           image: {
             type: file.type,
             title: title,
             userId: userId,
             size: file.size,
-            width: dimensions.width,
-            height: dimensions.height
+            width: width,
+            height: height
           }
          });
        })
@@ -56,7 +52,9 @@
        .catch(function (err) {
          console.log('Error Uploading File:', err);
        });
-    };
+      };
+      reader.readAsDataURL(file);
+    }
 
     function getAllImages () {
 

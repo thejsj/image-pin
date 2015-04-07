@@ -23,7 +23,7 @@
 
     var changeImagesToBase64 = function () {
       vm.images.forEach(function (image, key) {
-        if (image.base64 === undefined) {
+        if (image.file !== undefined && image.base64 === undefined) {
           (function (i) {
             var reader = new FileReader();
             reader.onload = function(e) {
@@ -38,7 +38,6 @@
     };
 
     vm.likePin = function (imageId) {
-      console.log('Like Pin', imageId);
       AuthFactory.getUserName()
         .then(function (user) {
           var imageIndex = _.findIndex(vm.images, {'id': imageId});
@@ -47,14 +46,6 @@
             imagesTable.update(vm.images[imageIndex]);
           }
       });
-    };
-
-    vm.addPin = function (imageId) {
-      console.log('Add Pin', imageId);
-      AuthFactory.getUserName()
-        .then(function (user) {
-          console.log(user.userId);
-        });
     };
 
     vm.addImage = function () {

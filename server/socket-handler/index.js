@@ -1,4 +1,4 @@
-e/*jshint node:true */
+/*jshint node:true */
 'use strict';
 var _ = require('lodash');
 var r = require('../db');

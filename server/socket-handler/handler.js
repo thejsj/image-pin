@@ -3,7 +3,6 @@ var _ = require('lodash');
 
 var findById = function(tableName, joins) {
   return function(id, cb){
-    console.log('* findById', id);
     // Establish basic query
     var query = r.table(tableName).get(id);
     // Add joins
@@ -16,16 +15,13 @@ var findById = function(tableName, joins) {
           return { user: r.table(join.tableName).get(row('userId')) };
         });
     });
-    console.log(query.toString());
     // Run Query
     query.run(r.conn, cb);
   };
 };
 var add = function (tableName) {
   return function(record, cb){
-    console.log('* Add');
     record.createdAt = new Date();
-    console.log('Record: ', record);
     r.table(tableName)
       .insert(record)
       .run(r.conn, function(err, result){
@@ -41,7 +37,6 @@ var update = function (tableName) {
     // Only pick certain fields
     record = _.pick(record, 'id', 'title', 'likes');
     record.likes = _.unique(record.likes);
-    console.log('* Update', record);
     r.table(tableName)
       .get(record.id)
       .update(record)
@@ -51,7 +46,6 @@ var update = function (tableName) {
 
 var _delete = function (tableName) {
   return function(id, cb){
-    console.log('* Delete');
     r.table(tableName)
       .get(id)
       .delete()
@@ -61,7 +55,6 @@ var _delete = function (tableName) {
 
 var changeStart = function (tableName, socket) {
   return function(data){
-    console.log('* Change Start');
     var limit, filter;
     limit = data.limit || 100;
     filter = data.filter || {};

@@ -7,9 +7,57 @@
   width: 50px;
 }
 
+.modal-content {
+  border-radius: 0;
+  input[type="text"] {
+    display: block;
+    width: 100%;
+    padding: 7px;
+    font-size: 1em;
+  }
+  input[type="file"]{
+    width: 100%;
+    border: solid 1px #C8C8C8;
+    padding: 7px;
+  }
+  label {
+      text-transform: uppercase;
+      color: #777;
+      font-size: 0.8em;
+      letter-spacing: 0.05em;
+  }
+ }
+
+.modal-header {
+  background: $red;
+  color: white;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 1.35em;
+  text-align: center;
+  text-shadow: 0px 0px 1px #777;
+}
+
 .image-container-container {
-  width: 24%;
-  padding: 5px;
+  margin-top: 5px;
+  opacity: 0;
+
+  &.loaded {
+    opacity: 1;
+  }
+  .image-block {
+    min-height: 150;
+    background-color: #f7f7f7;
+    background-image: url('/assets/img/puff.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    text-align: center; 
+    .image-link {
+      line-height: 0;
+      display: block;
+    }
+  }
 
   .image-container {
     border: solid 1px $gray;

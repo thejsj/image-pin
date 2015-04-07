@@ -4,4 +4,21 @@
 
 body, html {
   font-family: 'Source Sans Pro', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.like-button {
+  cursor: pointer; 
+  color: #000;
+  &:hover {
+    color: $red;
+  }
+  &.liked {
+    cursor: default;
+    color: #777;
+    &:hover {
+      color: #777;
+    }
+  }
 }

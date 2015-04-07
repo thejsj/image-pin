@@ -11,13 +11,13 @@
             />
           </div>
           <div class='single-image-metadata'>
-            <a ng-click='single.likePin(single.image.id)'>
+            <a class='like-button' ng-class="{ liked: single.image.likedByUser }" ng-click='single.likePin(single.image.id)'>
               <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
               <span class='number-of-likes' ng-if='image.likes.length > 0'>{{ single.image.likes.length }}</span>
             </a>
-            <a ng-click='single.addPin(single.image.id)'>
-              <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-            </a>
+            <!--<a ng-click='single.addPin(single.image.id)'>-->
+              <!--<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>-->
+            <!--</a>-->
           </div>
           <div class='single-image-comments'>
           </div>

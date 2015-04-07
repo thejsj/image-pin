@@ -14,4 +14,14 @@
     }
 
   }
+  .logout-button {
+    .btn {
+      float: right;
+      margin-top: 15px;
+      a, a:visited {
+        text-decoration: none;
+        color: white;
+      }
+    }
+  }
 }
