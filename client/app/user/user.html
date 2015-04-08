@@ -1,35 +1,32 @@
 <div class="home" ng-controller='UserController as user'>
-  <div class='container-fluid'>
-    <div class='row header'>
-      <div class='col-md-4 col-sm-6'>
-        <h1 class='main-title'>
-          <a ui-sref='home()'>App Name Here</a>
-        </h1>
-      </div>
-      <div class='col-md-2 col-sm-6 col-md-offset-5'>
-        <button class='btn btn-default'>
-          <a href='/api/auth/logout'>Logout</a>
-        </button>
-      </div>
-    </div>
-  </div>
-  <div masonry>
-    <div class="masonry-brick image-container-container" ng-repeat="image in user.images">
-      <div class="image-container">
-        <div ng-if="image.base64">
-          <img
-            class='main-image'
-            data-ng-src='data:{{ image.type }};base64,{{ image.base64 }}'
-           />
+  <ipheader></ipheader>
+  <div masonry="{
+      transitionDuration: '0.4s', 
+      hiddenStyle: { opacity: 0, transform: 'scale(0.00001)' },
+      visibleStyle: { opacity: 1, transform: 'scale(1)'}
+  }" preserve-order>
+    <div class="masonry-brick image-container-container col-sm-6 col-md-4 col-lg-3" ng-repeat="image in user.images">
+        <div class="image-container">
+            <div class='image-block' ng-class='{ "image-not-loaded": (image.base64 === undefined) }'>
+            <a class='image-link' ui-sref='single({ id: image.id })' >
+              <img
+                class='main-image'
+                ng-if="image.base64 !== undefined"
+                data-ng-src='data:{{ image.type }};base64,{{ image.base64 }}'
+               />
+              <div 
+                class='image-placeholder-block'
+                ng-if="image.base64 === undefined"
+              >
+              </div>
+            </a>
         </div>
         <div class='meta-data'>
             <p>{{ image.title }}</p>
-            <a ng-click='user.likePin(image)'>
+            <a class='like-button' ng-click='user.likePin(image.id)'>
               <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+              <span class='number-of-likes' ng-if='image.likes.length > 0'>{{ image.likes.length }}</span>
             </a>
-            <!--<a ng-click='user.addPin(image)'>-->
-              <!--<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>-->
-            <!--</a>-->
         </div>
         <a ui-sref='user({ userId: image.user.id })'>
           <div class='user-box'>

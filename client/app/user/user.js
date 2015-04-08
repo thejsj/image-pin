@@ -5,12 +5,13 @@
   angular.module('imagePin.user', ['ui.bootstrap'])
     .controller('UserController', UserController);
 
-  UserController.$inject = ['$scope', '$modal', 'bindTable', '$log'];
+  UserController.$inject = ['$scope', '$modal', 'bindTable', '$log', 'AuthFactory', '$stateParams'];
 
-  function UserController($scope, $modal, bindTable, $log) {
+  function UserController($scope, $modal, bindTable, $log, AuthFactory, $stateParams) {
     var vm = this;
+    vm.userId = $stateParams.userId;
     var imagesTable = bindTable('images');
-    imagesTable.bind({ userId:  "f5b6be61-46f3-4e05-964f-379350404440" }, 100);
+    imagesTable.bind({ userId: vm.userId }, 100);
 
     vm.images = imagesTable.rows;
     vm.delete = imagesTable.delete;
@@ -23,7 +24,7 @@
 
     var changeImagesToBase64 = function () {
       vm.images.forEach(function (image, key) {
-        if (image.base64 === undefined) {
+        if (image.file !== undefined && image.base64 === undefined) {
           (function (i) {
             var reader = new FileReader();
             reader.onload = function(e) {
@@ -34,6 +35,17 @@
             reader.readAsDataURL(new Blob([image.file]));
           }(key));
         }
+      });
+    };
+
+    vm.likePin = function (imageId) {
+      AuthFactory.getUserName()
+        .then(function (user) {
+          var imageIndex = _.findIndex(vm.images, {'id': imageId});
+          if (!_.contains(vm.images[imageIndex].likes, user.userId)) {
+            vm.images[imageIndex].likes.push(user.userId);
+            imagesTable.update(vm.images[imageIndex]);
+          }
       });
     };
 
