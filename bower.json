@@ -14,17 +14,23 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.3.15",
-    "ui-router": "~0.2.13",
-    "bootstrap-social": "~4.8.0",
-    "bootstrap-sass-official": "~3.3.4",
-    "ngSocket": "~0.2.1",
-    "ui-bootstrap": "~0.12.1",
-    "angular-bootstrap": "~0.12.1",
-    "BindTable": "git@github.com:knowthen/BindTable.git",
-    "angular-socket-io": "~0.7.0",
-    "angular-masonry": "~0.11.0",
     "lodash": "~3.6.0",
-    "angular-moment": "~0.9.2"
+    "angular": "~1.3.15",
+    "angular-bootstrap": "~0.12.1",
+    "angular-socket-io": "~0.7.0",
+    "angular-masonry": "https://github.com/thejsj/angular-masonry/archive/master.tar.gz",
+    "angular-moment": "~0.9.2",
+    "ui-router": "~0.2.13",
+    "ui-bootstrap": "~0.12.1",
+    "bootstrap-social": "~4.8.0",
+    "BindTable": "https://github.com/thejsj/BindTable/archive/v0.0.1.tar.gz",
+    "bootstrap-sass-official": "~3.3.4",
+    "ng-file-upload": "~3.2.4",
+    "jquery-bridget": "~1.1.0",
+    "jquery": "~2.1.3",
+    "imagesloaded": "~3.1.8"
+  },
+  "resolutions": {
+    "angular": "~1.3.15"
   }
 }

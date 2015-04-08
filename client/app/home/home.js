@@ -10,7 +10,9 @@
   function HomeController($scope, $modal, bindTable, $log, AuthFactory) {
     var vm = this;
     var imagesTable = bindTable('images');
-    imagesTable.bind(null, 100);
+    imagesTable.bind(function (row) {
+     return row.hasFields('file');
+    }, 100);
     window.imagesTable = imagesTable;
     vm.images = imagesTable.rows;
     vm.delete = imagesTable.delete;

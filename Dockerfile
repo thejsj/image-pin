@@ -25,9 +25,6 @@ RUN \
 # Define working directory.
 WORKDIR /data
 
-# Define default command.
-CMD ["bash"]
-
 RUN npm install -g gulp bower node-sass
 ADD package.json /app/package.json
 

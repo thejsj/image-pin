@@ -4,7 +4,6 @@
 var _ = require('lodash');
 var multiparty = require('multiparty');
 var fs = require('fs');
-var imageToAscii = require('image-to-ascii');
 
 var checkType = require('../../check-type');
 var r = require('../../db');

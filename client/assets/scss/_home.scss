@@ -64,9 +64,11 @@
   .image-block {
     min-height: 150;
     background-color: #f7f7f7;
-    background-image: url('/assets/img/puff.svg');
-    background-position: center center;
-    background-repeat: no-repeat;
+    &.image-not-loaded {
+        background-image: url('/assets/img/puff.svg');
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
     text-align: center; 
     .image-link {
       line-height: 0;
@@ -79,6 +81,9 @@
     border-radius: 5px;
     .image-link {
       cursor: zoom-in;
+    }
+    .image-placeholder-block {
+      height: 200px;
     }
     .main-image {
       max-width: 100%;

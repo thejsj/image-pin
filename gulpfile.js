@@ -21,8 +21,8 @@ gulp.task('js', function () {
       // Masonry
       './client/lib/jquery/dist/jquery.min.js',
       './client/lib/jquery-bridget/jquery.bridget.js',
-      './client/lib/imagesloaded/imagesloaded.pkgd.min.js',
       './client/lib/masonry/dist/masonry.pkgd.min.js',
+      './client/lib/imagesloaded/imagesloaded.pkgd.min.js',
       './client/lib/angular-masonry/angular-masonry.js',
       // Bind Table
       './client/lib/angular-socket-io/socket.js',
@@ -54,9 +54,7 @@ gulp.task('sass', function () {
   sass.render({
     file: './client/assets/scss/main.scss',
   }, function (err, result) {
-    if (err) {
-      console.log(err);
-    }
+    if (err) console.log(err);
     fs.writeFileSync(
       path.join(__dirname, '/client/dist/main.css'),
       result.css.toString()
