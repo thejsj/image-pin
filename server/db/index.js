@@ -31,22 +31,37 @@ r.connect(config.get('rethinkdb'))
       .then(function () {
         r.conn.use(config.get('rethinkdb').db);
         // Create Tables
-        q()
+        return q()
+          // Create tables
           .then(function () {
-            return r.tableCreate('images').then(createIfDoesntExist);
+            return r.tableCreate('images');
           })
+          .then(createIfDoesntExist)
           .then(function () {
-            return r.table('images').indexCreate('createdAt').then(createIfDoesntExist);
+            return r.tableCreate('comments');
           })
+          .then(createIfDoesntExist)
           .then(function () {
-            return r.tableCreate('users').then(createIfDoesntExist);
+            return r.tableCreate('users');
           })
+          .then(createIfDoesntExist)
+          // Create Indexes
           .then(function () {
-            return r.table('users').indexCreate('login').then(createIfDoesntExist);
+            return r.table('images').indexCreate('createdAt');
           })
+          .then(createIfDoesntExist)
           .then(function () {
-            return r.tableCreate('likes').then(createIfDoesntExist);
-          });
+            return r.table('comments').indexCreate('createdAt');
+          })
+          .then(createIfDoesntExist)
+          .then(function () {
+            return r.table('comments').indexCreate('imageId');
+          })
+          .then(createIfDoesntExist)
+          .then(function () {
+            return r.table('users').indexCreate('login');
+          })
+          .then(createIfDoesntExist);
       });
   });
 

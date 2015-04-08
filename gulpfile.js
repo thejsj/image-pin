@@ -27,9 +27,13 @@ gulp.task('js', function () {
       // Bind Table
       './client/lib/angular-socket-io/socket.js',
       './client/lib/BindTable/bindtable.js',
+      // Angular Moment
+      './client/lib/moment/moment.js',
+      './client/lib/angular-moment/angular-moment.js',
       // Services
       './client/app/services/auth-factory.js',
       './client/app/services/image-factory.js',
+      './client/app/services/comment-factory.js',
       // Controllers
       './client/app/home/home.js',
       './client/app/user/user.js',

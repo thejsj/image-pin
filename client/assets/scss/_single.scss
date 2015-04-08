@@ -9,6 +9,9 @@
     padding: 10px;
     margin: 0;
   }
+  .single-main.title {
+    height: 20px;
+  }
   .single-main-image-container{
       .single-main-image {
         text-align: center;
@@ -17,5 +20,47 @@
   }
   .single-image-metadata {
     padding: 10px;
+  }
+  .single-image-comments {
+      .single-comment {
+        border-top: solid 1px $gray;
+        padding: 10px;
+          .user-box {
+            margin-bottom: 5px;
+            .user-avatar {
+              width: 40px;
+              height: 40px; 
+              border-radius: 50px;
+              float: left;
+            }
+            .user-name {
+              float: left; 
+              padding: 10px;
+              color: #999;
+            }
+          }
+        p {
+          clear: both;
+        }
+        .created-at {
+          float: right;
+          padding: 10px;
+          font-size: 0.8em;
+          font-style: italic;
+          color: #444;
+        }
+      }
+  }
+  .add-comment {
+      padding: 10px;
+      border-top: solid 1px $gray;
+      .btn {
+          margin-top: 10px;
+      }
+      textarea {
+        color: #333;
+        width: 100%;
+        resize: vertical;
+      }
   }
 }

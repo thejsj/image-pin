@@ -9,16 +9,52 @@
 
   function SingleController($scope, bindTable, AuthFactory, $stateParams) {
     var vm = this;
-    var imagesTable = bindTable('images');
-    imagesTable.bind(null, 100);
+    vm.imageId = $stateParams.id;
+    window.vm = vm;
+    var commentsTable = bindTable('comments');
+    commentsTable.bind({ imageId: vm.imageId  }, 100);
 
-    imagesTable.findById($stateParams.id)
-      .then(function (image) {
-        return AuthFactory.getUserName()
+    var imagesTable = bindTable('images');
+    imagesTable.bind({ id: vm.imageId  }, 1);
+
+    vm.comments = commentsTable.rows;
+
+    // Add Comment
+    vm.addComment = function () {
+        AuthFactory.getUserName()
           .then(function (user) {
-            vm.image = image;
-            vm.image.likedByUser = _.contains(vm.image.likes, user.userId);
-            if (vm.image.base64 === undefined) {
+            commentsTable.add({
+              text: $scope.textarea,
+              userId: user.userId,
+              imageId: vm.imageId,
+              createdAt: new Date()
+            });
+            $scope.textarea = '';
+          });
+    };
+
+    // Like Pin
+    vm.likePin = function () {
+      console.log('likePin');
+      AuthFactory.getUserName()
+        .then(function (user) {
+          if (!_.contains(vm.image.likes, user.userId)) {
+            vm.image.likes.push(user.userId);
+            imagesTable.update(vm.image);
+          }
+      });
+    };
+
+    // Listen to changes in the table
+    AuthFactory.getUserName()
+      .then(function (user) {
+        $scope.$watchCollection(function () {
+          return imagesTable.rows;
+        }, function (newVal, oldVal) {
+          if (imagesTable.rows.length <= 0) return;
+          vm.image = imagesTable.rows[0];
+          vm.image.likedByUser = _.contains(vm.image.likes, user.userId);
+            if (vm.image.file !== undefined && vm.image.base64 === undefined) {
               (function (image) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
@@ -31,6 +67,7 @@
             };
           });
       });
+
   };
 
 }());

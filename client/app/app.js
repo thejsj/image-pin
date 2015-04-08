@@ -7,6 +7,7 @@
       'angularFileUpload',
       'btford.socket-io',
       'bindtable',
+      'angularMoment',
       'imagePin.services',
       'imagePin.home',
       'imagePin.user',

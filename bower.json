@@ -24,6 +24,7 @@
     "BindTable": "git@github.com:knowthen/BindTable.git",
     "angular-socket-io": "~0.7.0",
     "angular-masonry": "~0.11.0",
-    "lodash": "~3.6.0"
+    "lodash": "~3.6.0",
+    "angular-moment": "~0.9.2"
   }
 }

@@ -36,7 +36,6 @@ var socketHandler = function (io, socket) {
   socket.on('comments:update', handlers.update('comments'));
   socket.on('comments:delete', handlers.delete('comments'));
   socket.on('comments:changes:start', handlers.changeStart('comments', socket));
-
 };
 
 module.exports = socketHandler;
