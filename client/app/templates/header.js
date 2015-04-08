@@ -12,11 +12,15 @@
         },
         link: function (scope, element, attr) {
           if (attr.showLogout !== undefined && attr.showLogout === 'false') {
-            $scope.showLogout = false;
+            scope.showLogout = false;
           } else {
-            $scope.showLogout = true;
+            scope.showLogout = true;
           }
+        },
+        controller: function ($scope, $element){
         }
       };
+    }])
+    .controller('HeaderController', ['$scope', function ($scope) {
     }]);
 })();

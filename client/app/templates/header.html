@@ -1,11 +1,11 @@
-<div class='container-fluid'>
+<div class='container-fluid' ng-controller="HeaderController">
   <div class='row header'>
     <div class='col-md-4 col-sm-6'>
         <h1 class='main-title'>
             <a ui-sref='home()'>App Name Here</a>
         </h1>
     </div>
-    <div class='logout-button col-md-2 col-sm-6 col-md-offset-6' ng-if='showLogout'>
+    <div class='logout-button col-md-2 col-sm-6 col-md-offset-6' ng-show='$parent.showLogout'>
         <button class='btn btn-default btn-primary'>
             <a href='/api/auth/logout'>Logout</a>
         </button>
