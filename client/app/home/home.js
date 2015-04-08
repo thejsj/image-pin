@@ -11,32 +11,10 @@
     var vm = this;
     var imagesTable = bindTable('images');
 
-    imagesTable.bind(function (row) { return row.hasFields('file'); }, 100);
+    imagesTable.bind(function (row) { return row.hasFields('fileName'); }, 100);
 
     vm.images = imagesTable.rows;
     vm.delete = imagesTable.delete;
-
-    $scope.$watchCollection(function () {
-      return vm.images;
-    }, function (newVal, oldVal) {
-      changeImagesToBase64();
-    });
-
-    var changeImagesToBase64 = function () {
-      vm.images.forEach(function (image, key) {
-        if (image.file !== undefined && image.base64 === undefined) {
-          (function (i) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-              var base64 = (e.target.result).match(/^data:([A-Za-z-+\/]*);base64,(.+)$/);
-              vm.images[i].base64 = base64[2];
-              $scope.$digest();
-            }.bind(this);
-            reader.readAsDataURL(new Blob([image.file]));
-          }(key));
-        }
-      });
-    };
 
     vm.likePin = function (imageId) {
       AuthFactory.getUserName()

@@ -5,6 +5,7 @@ var gulp = require('gulp');
 
 var sass = require('node-sass');
 var concat = require('gulp-concat');
+
 var fs = require('fs');
 var path = require('path');
 
@@ -45,10 +46,15 @@ gulp.task('js', function () {
       './client/lib/ng-file-upload/angular-file-upload.js',
     ])
     .pipe(concat('main.js'))
-    // .pipe(uglify())
     .pipe(gulp.dest('./client/dist/'));
 });
 
+gulp.task('minify-css', function() {
+  return gulp.src('./client/dist/*.css')
+    .pipe(minifyCSS())
+    .pipe(gulp.dest('./client/dist/'));
+
+});
 
 gulp.task('sass', function () {
   sass.render({
@@ -68,4 +74,5 @@ gulp.task('watch', ['js', 'sass'], function () {
 });
 
 gulp.task('default', ['js', 'sass']);
-gulp.task('build', ['js', 'sass']);
+gulp.task('default', ['js', 'sass']);
+

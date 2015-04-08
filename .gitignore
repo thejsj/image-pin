@@ -5,6 +5,8 @@ client/lib
 client/dist
 client/dist/main.css
 
+uploads
+
 config
 !config/default.js
 

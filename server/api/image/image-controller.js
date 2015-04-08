@@ -4,6 +4,7 @@
 var _ = require('lodash');
 var multiparty = require('multiparty');
 var fs = require('fs');
+var path = require('path');
 
 var checkType = require('../../check-type');
 var r = require('../../db');
@@ -62,13 +63,16 @@ var imageUpdate = function (req, res) {
   var form = new multiparty.Form();
   form.parse(req, function (err, fields, files) {
     var imagePath = files.file[0].path;
-    var imageId = JSON.parse(fields.data[0]).id;
-    fs.readFile(imagePath, function (err, buffer) {
-      var image = r.binary(buffer);
+    var data = JSON.parse(fields.data[0]);
+    var imageId = data.id;
+    var fileExtension = data.name.split('.')[1];
+    var fileName = imageId + '.' + fileExtension;
+    var newImagePath = path.join(__dirname, '/../../../','/uploads/', fileName);
+    fs.rename(imagePath, newImagePath, function (err) {
       r.table('images')
        .get(imageId)
        .update({
-         file: image,
+         fileName: fileName,
        })
        .run(r.conn)
        .then(function (query_result) {

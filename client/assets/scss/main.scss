@@ -5,7 +5,7 @@
 // This path is relative to the /dist directory and not to /assets/scss
 $bootstrap-icon-path-dist: "../lib/bootstrap-sass-official/assets/fonts/bootstrap/";
 
-@import '#{$lib-path}normalize.css/normalize.css';
+@import '../../lib/bootstrap-sass-official/assets/stylesheets/bootstrap/normalize';
 @import '../../lib/bootstrap-sass-official/assets/stylesheets/bootstrap/variables';
 @import '../../lib/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins';
 @import '../../lib/bootstrap-sass-official/assets/stylesheets/bootstrap/grid';

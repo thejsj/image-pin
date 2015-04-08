@@ -7,16 +7,14 @@
   }" preserve-order>
     <div class="masonry-brick image-container-container col-sm-6 col-md-4 col-lg-3" ng-repeat="image in user.images">
         <div class="image-container">
-            <div class='image-block' ng-class='{ "image-not-loaded": (image.base64 === undefined) }'>
+          <div class='image-block' ng-class='{ "image-not-loaded": (image.fileName === undefined) }'>
             <a class='image-link' ui-sref='single({ id: image.id })' >
               <img
                 class='main-image'
-                ng-if="image.base64 !== undefined"
-                data-ng-src='data:{{ image.type }};base64,{{ image.base64 }}'
+                ng-src='{{ "/uploads/" + image.fileName  }}'
                />
               <div 
                 class='image-placeholder-block'
-                ng-if="image.base64 === undefined"
               >
               </div>
             </a>

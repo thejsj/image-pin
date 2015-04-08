@@ -49,7 +49,8 @@
             url: '/api/image/' + res.data.id,
             file: file,
             data: {
-              id: res.data.id
+              id: res.data.id,
+              name: file.name
             }
           });
         })

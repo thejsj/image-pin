@@ -39,6 +39,7 @@ app
 app
   .use('/config.js', clientConfigParser)
   .use('/api/', apiRouter)
+  .use('/uploads/', express.static(__dirname + '/../uploads'))
   .use(express.static(__dirname + '/../client'))
   .use('*', function (req, res) {
     res.status(404).send('404 Not Found').end();

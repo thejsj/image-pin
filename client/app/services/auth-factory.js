@@ -15,7 +15,7 @@
   function AuthFactory($http, $state, $q) {
 
     var factory = {
-      userId: null,
+      user: null,
       isLoggedIn: isLoggedIn,
       getUserName: getUserName
     };
@@ -23,34 +23,31 @@
     return factory;
 
     function isLoggedIn(redirectToLogin) {
+      if (factory.user !== null) {
+        return $q.when(factory.user);
+      }
       return $http.get('/api/auth/user')
         .then(function (res) {
-          factory.userId = res.data.userId;
-          factory.userName = res.data.userName;
-          factory.githubAvatarUrl = res.data.githubAvatarUrl;
+           factory.user = {
+            userId: res.data.userId,
+            userName: res.data.userName,
+            githubAvatarUrl: res.data.githubAvatarUrl
+          };
           if (res.data.userId === null) {
             if (redirectToLogin !== false) {
               return $state.go('login');
             }
             return false;
           }
-          return {
-            'userName': factory.userName,
-            'userId': factory.userId,
-            'githubAvatarUrl': factory.githubAvatarUrl,
-          };
+          return factory.user;
         });
     }
 
     function getUserName() {
-      if (factory.userName === undefined) {
+      if (factory.user === undefined) {
         return factory.isLoggedIn();
       } else {
-        return $q.when({
-          'userName': factory.userName,
-          'userId': factory.userId,
-          'githubAvatarUrl': factory.githubAvatarUrl
-        });
+        return $q.when(factory.user);
       }
     }
 

@@ -68,6 +68,12 @@
         background-image: url('/assets/img/puff.svg');
         background-position: center center;
         background-repeat: no-repeat;
+        .main-image {
+          display: none;
+        }
+        .image-placeholder-block {
+          display: block;
+        }
     }
     text-align: center; 
     .image-link {
@@ -84,6 +90,7 @@
     }
     .image-placeholder-block {
       height: 200px;
+      display: none;
     }
     .main-image {
       max-width: 100%;
