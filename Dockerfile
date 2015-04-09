@@ -46,9 +46,11 @@ WORKDIR /app
 RUN npm run build
 
 WORKDIR /
-ADD uploads /app/uploads
 ADD server /app/server
 ADD config /app/config
+
+# Define Volumes
+VOLUME /app/uploads
 
 # Define default command.
 WORKDIR /app
