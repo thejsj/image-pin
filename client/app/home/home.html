@@ -8,7 +8,8 @@
     <div class="masonry-brick image-container-container col-sm-6 col-md-4 col-lg-3" ng-repeat="image in home.images">
         <div class="image-container">
             <div class='image-block' ng-class='{ "image-not-loaded": (image.fileName === undefined) }'>
-            <a class='image-link' ui-sref='single({ id: image.id })' >
+            <!--<a class='image-link' ui-sref='single({ id: image.id })' >-->
+            <div class='image-link'>
               <img
                 class='main-image'
                 ng-src='{{ "/uploads/" + image.fileName  }}'
@@ -17,7 +18,8 @@
                 class='image-placeholder-block'
               >
               </div>
-            </a>
+            </div>
+            <!--</a>-->
         </div>
         <div class='meta-data'>
             <p>{{ image.title }}</p>
