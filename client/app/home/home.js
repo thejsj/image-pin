@@ -16,6 +16,8 @@
     vm.images = imagesTable.rows;
     vm.delete = imagesTable.delete;
 
+    window.imagesTable = imagesTable;
+
     vm.likePin = function (imageId) {
       AuthFactory.getUserName()
         .then(function (user) {

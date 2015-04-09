@@ -66,15 +66,12 @@ var changeStart = function (tableName, socket) {
           .filter(filter)
           .limit(limit)
           .changes()
-          .merge(function(row){
-            if (row('new_val').eq(null)) {
-              return {};
-            }
+          .merge(r.branch(
+            r.row('new_val'),
             // This should be integrated with the joins table above!
-            return { new_val: {
-              user: r.table('users').get(row('new_val')('userId')) }
-            };
-          })
+            { new_val: { user: r.table('users').get(r.row('new_val')('userId')) }},
+            { new_val: { user: null }}
+          ))
           .run(r.conn, handleChange);
       });
 
