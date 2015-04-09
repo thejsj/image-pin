@@ -20,11 +20,13 @@ gulp.task('js', function () {
       './client/lib/angular-bootstrap/ui-bootstrap-tpls.js',
       './client/lib/ui-router/release/angular-ui-router.js',
       // Masonry
-      './client/lib/jquery/dist/jquery.min.js',
-      './client/lib/jquery-bridget/jquery.bridget.js',
-      './client/lib/masonry/dist/masonry.pkgd.min.js',
-      './client/lib/imagesloaded/imagesloaded.pkgd.min.js',
-      './client/lib/angular-masonry/angular-masonry.js',
+      //'./client/lib/jquery/dist/jquery.min.js',
+      //'./client/lib/jquery-bridget/jquery.bridget.js',
+      //'./client/lib/masonry/dist/masonry.pkgd.min.js',
+      //'./client/lib/imagesloaded/imagesloaded.pkgd.min.js',
+      //'./client/assets/js/angular-masonry.js',
+      // Deck Grid
+      './client/lib/angular-deckgrid/angular-deckgrid.js',
       // Bind Table
       './client/lib/angular-socket-io/socket.js',
       './client/lib/BindTable/bindtable.js',
@@ -37,6 +39,7 @@ gulp.task('js', function () {
       './client/app/services/comment-factory.js',
       // Controllers
       './client/app/home/home.js',
+      './client/app/home/comment-form.js',
       './client/app/user/user.js',
       './client/app/single/single.js',
       './client/app/templates/header.js',
@@ -71,6 +74,7 @@ gulp.task('sass', function () {
 gulp.task('watch', ['js', 'sass'], function () {
   gulp.watch('./client/assets/scss/**/*.scss', ['sass']);
   gulp.watch('./client/app/**/*.js', ['js']);
+  gulp.watch('./client/assets/**/*.js', ['js']);
 });
 
 gulp.task('default', ['js', 'sass']);

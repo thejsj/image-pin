@@ -1,5 +1,6 @@
 var r = require('../db');
 var _ = require('lodash');
+var q = require('q');
 
 var findById = function(tableName, joins) {
   return function(id, cb){
@@ -53,7 +54,7 @@ var _delete = function (tableName) {
   };
 };
 
-var changeStart = function (tableName, socket) {
+var changeStart = function (tableName, socket, opts) {
   return function(data){
     var limit, filter;
     limit = data.limit || 100;
@@ -61,23 +62,23 @@ var changeStart = function (tableName, socket) {
 
     r.getNewConnection()
       .then(function (conn) {
-        r.table(tableName)
-          .orderBy({index: r.desc('createdAt')})
-          .filter(filter)
-          .limit(limit)
-          .changes()
-          .merge(r.branch(
-            r.row('new_val'),
-            // This should be integrated with the joins table above!
-            { new_val: { user: r.table('users').get(r.row('new_val')('userId')) }},
-            { new_val: { user: null }}
-          ))
-          .run(r.conn, handleChange);
-      });
+        return q()
+          .then(function () {
+            if (opts.query) return opts.query;
+            return r.table(tableName)
+              .orderBy({index: r.desc('createdAt')})
+              .filter(filter)
+              .limit(limit)
+              .changes();
+          })
+          .then(function (query) {
+            return query.run(conn, handleChange);
+          });
+      })
 
     function handleChange (err, cursor) {
       if(err) return console.log(err);
-      if(cursor) {
+      if (cursor) {
         cursor.each(function(err, record){
           if(err) return console.log(err);
           socket.emit(tableName + ':changes', record);
@@ -87,7 +88,7 @@ var changeStart = function (tableName, socket) {
       socket.on('disconnect', stopCursor);
 
       function stopCursor () {
-        if(cursor) cursor.close();
+        if (cursor) cursor.close();
         socket.removeListener(tableName + ':changes:stop', stopCursor);
         socket.removeListener('disconnect', stopCursor);
       }

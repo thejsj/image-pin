@@ -23,7 +23,18 @@ var socketHandler = function (io, socket) {
   socket.on('images:delete', handlers.delete('images'));
   // Currently, images and user joins are coupled together.
   // This should work in a way similar to the `findById` method
-  socket.on('images:changes:start', handlers.changeStart('images', socket));
+  socket.on('images:changes:start', handlers.changeStart('images', socket, {
+    query: r.table('images')
+      .orderBy({index: r.desc('createdAt')})
+      .limit(100)
+      .changes()
+       .merge(r.branch(
+         r.row('new_val'),
+         // This should be integrated with the joins table above!
+         { new_val: { user: r.table('users').get(r.row('new_val')('userId')) }},
+         { new_val: { user: null }}
+       ))
+    }));
 
   socket.on('comments:findById', handlers.findById('comments', [
     {
@@ -35,7 +46,19 @@ var socketHandler = function (io, socket) {
   socket.on('comments:add', handlers.add('comments'));
   socket.on('comments:update', handlers.update('comments'));
   socket.on('comments:delete', handlers.delete('comments'));
-  socket.on('comments:changes:start', handlers.changeStart('comments', socket));
+  socket.on('comments:changes:start', handlers.changeStart('comments', socket, {
+    query: r.table('comments')
+      .orderBy({index: r.desc('createdAt')})
+      .limit(100)
+      .changes()
+       .merge(function(comment){
+         return r.branch(
+           comment('new_val'),
+           { new_val: { user: r.table('users').get(comment('new_val')('userId')) }},
+           { new_val: { user: null }}
+         );
+       })
+  }));
 
 };
 

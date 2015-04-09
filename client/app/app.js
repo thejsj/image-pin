@@ -3,13 +3,15 @@
   'use strict';
   angular.module('imagePin', [
       'ui.router',
-      'wu.masonry',
+      //'wu.masonry',
+      'akoeing.deckgrid',
       'angularFileUpload',
       'btford.socket-io',
       'bindtable',
       'angularMoment',
       'imagePin.services',
       'imagePin.home',
+      'imagePin.form',
       'imagePin.user',
       'imagePin.single',
       'imagePin.header',

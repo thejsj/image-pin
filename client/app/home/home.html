@@ -8,8 +8,8 @@
     <div class="masonry-brick image-container-container col-sm-6 col-md-4 col-lg-3" ng-repeat="image in home.images">
         <div class="image-container">
             <div class='image-block' ng-class='{ "image-not-loaded": (image.fileName === undefined) }'>
-            <!--<a class='image-link' ui-sref='single({ id: image.id })' >-->
-            <div class='image-link'>
+            <a class='image-link' ui-sref='single({ id: image.id })' >
+            <!--<div class='image-link'>-->
               <img
                 class='main-image'
                 ng-src='{{ "/uploads/" + image.fileName  }}'
@@ -18,8 +18,8 @@
                 class='image-placeholder-block'
               >
               </div>
-            </div>
-            <!--</a>-->
+            <!--</div>-->
+            </a>
         </div>
         <div class='meta-data'>
             <p>{{ image.title }}</p>
@@ -27,11 +27,23 @@
               <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
               <span class='number-of-likes' ng-if='image.likes.length > 0'>{{ image.likes.length }}</span>
             </a>
-            <!--<a ng-click='home.addPin(image.id)'>-->
-              <!--<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>-->
-            <!--</a>-->
+            <a ng-click='home.showComments(image.id)' >
+              <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+              <span class='number-of-comments' ng-class="{ hidden: (image.comments.length <= 0) }">{{ image.comments.length }}</span>
+            </a>
         </div>
-        <a ui-sref='user({ userId: image.user.id })'>
+        <div class='image-comments' ng-class="{ hidden: (!home._showComments[image.id]) }">
+          <div class='single-comment' ng-repeat='comment in image.comments'>
+              <p>{{ comment.user.login }}: {{ comment.text }}</p>
+          </div>
+          <div class='add-comment'>
+            <form ng-submit='form.addComment(image.id)' ng-controller='CommentFormController as form'>
+              <textarea ng-model="textarea" class="form-control" rows="3" placeholder='Add your comment'></textarea>
+              <input type='submit' class='btn btn-default btn-primary' />
+            </form>
+          </div>
+        </div>
+        <a ui-sref='user({ userId: image.user.id })' class='user-link'>
           <div class='user-box'>
             <img class='user-avatar' ng-src='{{ image.user.avatarUrl }}' />
             <p class='user-login'>{{ image.user.login }}</p>
