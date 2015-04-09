@@ -69,6 +69,7 @@ var imageUpdate = function (req, res) {
     var fileName = imageId + '.' + fileExtension;
     var newImagePath = path.join(__dirname, '/../../../','/uploads/', fileName);
     fs.rename(imagePath, newImagePath, function (err) {
+      if (err) console.log(err);
       r.table('images')
        .get(imageId)
        .update({
