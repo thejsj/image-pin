@@ -67,6 +67,9 @@ var changeStart = function (tableName, socket) {
           .limit(limit)
           .changes()
           .merge(function(row){
+            if (row('new_val').eq(null)) {
+              return {};
+            }
             // This should be integrated with the joins table above!
             return { new_val: {
               user: r.table('users').get(row('new_val')('userId')) }

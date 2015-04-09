@@ -68,23 +68,41 @@ var imageUpdate = function (req, res) {
     var fileExtension = data.name.split('.')[1];
     var fileName = imageId + '.' + fileExtension;
     var newImagePath = path.join(__dirname, '/../../../','/uploads/', fileName);
-    fs.rename(imagePath, newImagePath, function (err) {
-      if (err) console.log(err);
-      r.table('images')
-       .get(imageId)
-       .update({
-         fileName: fileName,
-       })
-       .run(r.conn)
-       .then(function (query_result) {
-         res.json({
-           id: req.params.id
-         });
-       });
-    });
+    // Write files
+    var readStream  = fs.createReadStream(imagePath);
+    var writeStream = fs.createWriteStream(newImagePath);
+    writeStream
+      .on('finish', function () {
+          r.table('images')
+           .get(imageId)
+           .update({
+             fileName: fileName,
+           })
+           .run(r.conn)
+           .then(function (query_result) {
+             res.json({
+               id: req.params.id
+             });
+           });
+      });
+    // Listen for errors
+    readStream
+     .on('error', function (err) {
+       console.log('ReadStream ERR', err);
+     });
+    writeStream
+     .on('error', function (err) {
+       console.log('WriteStream ERR', err);
+     });
+     // Write Stream
+    readStream
+     .pipe(writeStream);
   });
 };
 
+exports.download = imageDownload;
+exports.create = imageCreate;
+exports.update = imageUpdate;
 exports.download = imageDownload;
 exports.create = imageCreate;
 exports.update = imageUpdate;
