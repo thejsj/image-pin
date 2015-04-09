@@ -46,6 +46,7 @@ WORKDIR /app
 RUN npm run build
 
 WORKDIR /
+ADD uploads /app/uploads
 ADD server /app/server
 ADD config /app/config
 
