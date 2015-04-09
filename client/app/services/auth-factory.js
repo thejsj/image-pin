@@ -3,12 +3,12 @@
   'use strict';
   angular.module('imagePin.services', [])
     .factory('AuthFactory', AuthFactory)
-    .factory('socket', function(socketFactory){
+    .factory('socket', ['socketFactory', function(socketFactory){
       return socketFactory();
-    })
-    .factory('bindTable', function(bindTableFactory, socket){
+    }])
+    .factory('bindTable', ['bindTableFactory', 'socket', function(bindTableFactory, socket) {
       return bindTableFactory({socket: socket});
-    });
+    }]);
 
   AuthFactory.$inject = ['$http', '$state', '$q'];
 

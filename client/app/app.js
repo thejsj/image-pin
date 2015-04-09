@@ -14,16 +14,12 @@
       'imagePin.single',
       'imagePin.header',
     ])
-    .config(function ($stateProvider, $urlRouterProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
       $urlRouterProvider.otherwise('/');
-      // $locationProvider.html5Mode(true);
       var authenticated = ['$q', 'AuthFactory', function ($q, AuthFactory) {
         var deferred = $q.defer();
-        console.log('Authenticated');
         AuthFactory.isLoggedIn(false)
           .then(function (isLoggedIn) {
-            console.log('isLoggedIn');
-            console.log(isLoggedIn);
             if (isLoggedIn) {
               deferred.resolve();
             } else {
@@ -58,10 +54,10 @@
             authenticated: authenticated
           }
         });
-    })
-    .run(function ($rootScope, $state) {
+    }])
+    .run(['$rootScope', '$state', function ($rootScope, $state) {
       $rootScope.$on('$stateChangeError', function (err, req) {
         $state.go('login');
       });
-    });
+    }]);
 })();
