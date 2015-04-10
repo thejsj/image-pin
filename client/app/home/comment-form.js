@@ -6,20 +6,14 @@
   angular.module('imagePin.form', [])
     .controller('CommentFormController', CommentFormController);
 
-  CommentFormController.$inject = ['$scope', '$modal', 'bindTable', '$log', 'AuthFactory'];
+  CommentFormController.$inject = ['$scope', '$modal', 'AuthFactory', 'ImageFactory'];
 
-  function CommentFormController($scope, $modal, bindTable, $log, AuthFactory) {
+  function CommentFormController($scope, $modal, AuthFactory, ImageFactory) {
     var vm = this;
 
     vm.addComment = function (imageId) {
-      AuthFactory.getUserName()
-        .then(function (user) {
-          commentsTable.add({
-            text: $scope.textarea,
-            userId: user.userId,
-            imageId: imageId,
-            createdAt: new Date()
-          });
+      ImageFactory.addComment(imageId, $scope.textarea)
+        .then(function () {
           $scope.textarea = '';
         });
     };

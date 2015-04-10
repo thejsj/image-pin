@@ -5,78 +5,53 @@
   angular.module('imagePin.homeSingle', [])
     .controller('HomeSingleController', HomeSingleController);
 
-  HomeSingleController.$inject = ['$scope', 'bindTable', 'AuthFactory'];
+  HomeSingleController.$inject = ['$scope', 'bindTable', 'AuthFactory', 'ImageFactory'];
 
-  function HomeSingleController($scope, bindTable, AuthFactory) {
+  function HomeSingleController($scope, bindTable, AuthFactory, ImageFactory) {
     var vm = this;
 
     vm.init = function (card) {
-      vm.id = card.id;
+      vm.card = card;
       vm.userId = null;
       vm.editMode = false;
+      vm._showComments = false;
       $scope.title = card.title;
     };
-
-    // Get user id
-    AuthFactory.getUserName()
-      .then(function (user) {
-        vm.userId = user.userId;
-      });
-
-    vm._showComments = false;
+    window.single = vm;
 
     vm.showComments = function () {
       vm._showComments = !vm._showComments;
     };
 
     vm.deleteImage = function (imageId) {
-      window.imagesTable.delete({
-        id: imageId
-      });
+      ImageFactory.deleteImage(imageId);
     };
 
     vm.toggleEditMode = function () {
+      vm.card.title = $scope.title;
       vm.editMode = !vm.editMode;
     };
 
-    vm.updateComment = function () {
-      AuthFactory.getUserName()
-        .then(function (user) {
-            getImage(vm.id, function (image) {
-              if (!image) return;
-              image.title = $scope.title;
-              window.imagesTable
-                .update(image);
-              vm.toggleEditMode();
-            });
-          });
+    vm.updateTitle = function () {
+      ImageFactory.updateTitle(vm.card.id, $scope.title)
+        .then(function () {
+          vm.toggleEditMode();
+        });
     };
 
     vm.isLiked = function (likes, id) {
       return likes.indexOf(id) !== -1;
     };
 
-    var getImage = function (imageId, cb) {
-      var imageIndex = _.findIndex(window.images, {'id': imageId});
-      if (imageIndex !== -1) {
-        return cb(window.images[imageIndex]);
-      }
-      return cb(false);
-    };
-
     vm.likePin = function (imageId) {
-      AuthFactory.getUserName()
-        .then(function (user) {
-            getImage(imageId, function (image) {
-              if (!image) return;
-              // TODO: Add contains
-              if (_.contains(image.likes, user.userId)) return;
-              image.likes.push(user.userId);
-              window.imagesTable
-                .update(image);
-            });
-          });
-    };
+      ImageFactory.likePin(imageId);
+   };
+
+    $scope.$watchCollection(function () {
+      return vm.card;
+    }, function () {
+      console.log('Card Updated');
+    });
 
   };
 

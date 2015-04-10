@@ -5,51 +5,30 @@
   angular.module('imagePin.home', ['ui.bootstrap'])
     .controller('HomeController', HomeController);
 
-  HomeController.$inject = ['$scope', '$modal', 'bindTable', '$log', 'AuthFactory'];
+  HomeController.$inject = ['$scope', '$modal', 'bindTable', 'AuthFactory', 'ImageFactory'];
 
-  function HomeController($scope, $modal, bindTable, $log, AuthFactory) {
+  function HomeController($scope, $modal, bindTable, AuthFactory, ImageFactory) {
     var vm = this;
-    var imagesTable = bindTable('images');
-    var commentsTable = bindTable('comments');
 
-    imagesTable.bind(function (row) { return row.hasFields('fileName'); }, 100);
-    commentsTable.bind({}, 1000);
+    vm.images = ImageFactory.getImages();
 
-    vm.images = imagesTable.rows;
-    vm.delete = imagesTable.delete;
-    vm._showComments = {};
+    var el = document.getElementById('image-drag-drop');
 
-    window.imagesTable = imagesTable;
-    window.images = vm.images;
-    window.commentsTable = commentsTable;
-    window.vm = vm;
-
-    var getImage = function (imageId, cb) {
-      var imageIndex = _.findIndex(vm.images, {'id': imageId});
-      if (imageIndex !== -1) {
-        return cb(vm.images[imageIndex]);
-      }
-      return cb(false);
-    };
-
-    $scope.$watchCollection(function () {
-      return commentsTable.rows;
-    }, function () {
-      vm.images.forEach(function (image) {
-        delete image.comments;
-      });
-      commentsTable.rows.forEach(function (comment) {
-        getImage(comment.imageId, function (image) {
-          if (!image) return;
-          image.comments = image.comments || [];
-          image.comments.push(comment);
+    el.addEventListener('drop', function (evt) {
+      evt.preventDefault();
+      evt.stopPropagation();
+      var files = evt.dataTransfer.files;
+      AuthFactory.getUserName()
+        .then(function (user) {
+          return ImageFactory.uploadImage(user.userId, '', files);
         });
-      });
-    });
+    }, false);
 
-    vm.showComments = function (imageId) {
-      vm._showComments[imageId] = ((vm._showComments[imageId] === undefined) ? true : !vm._showComments[imageId]);
-    };
+    el.addEventListener('dragover', function (evt) {
+      evt.stopPropagation();
+      evt.preventDefault();
+      evt.dataTransfer.dropEffect = 'copy';
+    });
 
     vm.addImage = function () {
       $modal.open({

@@ -47,7 +47,6 @@ var update = function (tableName) {
 
 var _delete = function (tableName) {
   return function(id, cb){
-    console.log('ID: ', id);
     r.table(tableName)
       .get(id)
       .delete()

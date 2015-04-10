@@ -1,6 +1,7 @@
 <div class="home" ng-controller='HomeController as home'>
   <ipheader></ipheader>
-  <div deckgrid class="deckgrid" source="home.images" cardTemplate="/app/home/home-single.html" >
+  <div  deckgrid class="deckgrid" source="home.images" cardTemplate="/app/home/home-single.html" >
+      <div class='clearfix'></div>
   </div>
   <button class='add-image-button btn btn-primary' ng-click='home.addImage()'>
     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>

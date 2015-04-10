@@ -11,6 +11,15 @@
   display: none;
 }
 
+.deckgrid:after {
+  content: '';
+  clear: both;
+  height: 0;
+  display: block;
+  font-size: 0;
+  visibility: hidden;
+}
+
 .deckgrid[deckgrid]::before {
     /* Specifies that the grid should have a maximum of 4 columns. Each column will have the classes 'column' and 'column-1-4' */
     content: '4 .column.column-1-4';
@@ -67,6 +76,7 @@
     margin: 4px;
     border: solid 1px $gray;
     border-radius: 5px;
+    background: white;
 
     &:hover {
       .image-link .delete-button {
@@ -121,6 +131,10 @@
     .meta-data {
       padding: 5px 10px;
       border-top: solid 1px $gray;
+      p.untitled {
+        color: #888;
+        font-style: italic;
+      }
     }
     .edit-title {
       padding: 6px;

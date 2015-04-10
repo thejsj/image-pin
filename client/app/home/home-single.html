@@ -19,10 +19,11 @@
     </div>
     <div class='meta-data'>
         <div ng-class='{ hidden: !single.editMode }'>
-          <input class='edit-title' ng-keyup="$event.keyCode == 13 ? single.updateComment() : null" ng-type="text" ng-model="title"/>
+          <input class='edit-title' ng-keyup="$event.keyCode == 13 ? single.updateTitle() : null" ng-type="text" ng-model="title"/>
         </div>
         <div ng-class='{ hidden: single.editMode }'>
-          <p ng-click='single.toggleEditMode()'>{{ card.title }}</p>
+          <p ng-click='single.toggleEditMode()' ng-class="{ hidden: (!card.title)}">{{ card.title }}</p>
+          <p ng-click='single.toggleEditMode()' class='untitled' ng-class="{ hidden: (card.title)}">Untitled</p>
         </div>
         <a class='like-button' ng-click='single.likePin(card.id)' ng-class="{ liked: (card.likes.indexOf(card.userId) !== -1) }">
           <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
