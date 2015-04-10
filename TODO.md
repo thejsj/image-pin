@@ -1,7 +1,6 @@
 - [ ] Add anonymous login
 - [ ] Add Drag and drop for images
 - [ ] Add inline editing for title
-- [ ] Add ability to delete posts
 - [ ] Fix comments get deleted when you click on something
 
 - [x] Fix listener leak in Sockets
@@ -9,3 +8,4 @@
 - [x] Fix first comment not showing up (???)
 - [x] Add CSS class for user who has already liked something
 - [x] Add styles for button in comments/like
+- [x] Add ability to delete posts

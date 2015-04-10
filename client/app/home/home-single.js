@@ -10,9 +10,11 @@
   function HomeSingleController($scope, bindTable, AuthFactory) {
     var vm = this;
 
-    vm.init = function (id) {
-      vm.id = id;
+    vm.init = function (card) {
+      vm.id = card.id;
       vm.userId = null;
+      vm.editMode = false;
+      $scope.title = card.title;
     };
 
     // Get user id
@@ -24,7 +26,6 @@
     vm._showComments = false;
 
     vm.showComments = function () {
-      console.log('showComments', vm._showComments);
       vm._showComments = !vm._showComments;
     };
 
@@ -32,6 +33,23 @@
       window.imagesTable.delete({
         id: imageId
       });
+    };
+
+    vm.toggleEditMode = function () {
+      vm.editMode = !vm.editMode;
+    };
+
+    vm.updateComment = function () {
+      AuthFactory.getUserName()
+        .then(function (user) {
+            getImage(vm.id, function (image) {
+              if (!image) return;
+              image.title = $scope.title;
+              window.imagesTable
+                .update(image);
+              vm.toggleEditMode();
+            });
+          });
     };
 
     vm.isLiked = function (likes, id) {

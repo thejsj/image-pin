@@ -42,21 +42,21 @@
           resolve: {
             authenticated: authenticated
           }
-        })
-        .state('single', {
-          url: '/single/:id',
-          templateUrl: '/app/single/single.html',
-          resolve: {
-            authenticated: authenticated
-          }
-        })
-        .state('user', {
-          url: '/user/:userId',
-          templateUrl: '/app/user/user.html',
-          resolve: {
-            authenticated: authenticated
-          }
         });
+        //.state('single', {
+          //url: '/single/:id',
+          //templateUrl: '/app/single/single.html',
+          //resolve: {
+            //authenticated: authenticated
+          //}
+        //})
+        //.state('user', {
+          //url: '/user/:userId',
+          //templateUrl: '/app/user/user.html',
+          //resolve: {
+            //authenticated: authenticated
+          //}
+        //});
     }])
     .run(['$rootScope', '$state', function ($rootScope, $state) {
       $rootScope.$on('$stateChangeError', function (err, req) {
