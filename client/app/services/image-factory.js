@@ -14,9 +14,9 @@
     imagesTable.bind(function (row) { return row.hasFields('fileName'); }, 100);
     commentsTable.bind({}, 1000);
 
-    var getImage = function (imageId, cb) {
+    var getImageIndex = function (imageId, cb) {
       var imageIndex = _.findIndex(imagesTable.rows, {'id': imageId});
-      if (imageIndex !== -1)  return cb(imagesTable.rows[imageIndex]);
+      if (imageIndex !== -1)  return cb(imageIndex);
       return cb(false);
     };
 
@@ -35,10 +35,12 @@
         delete image.comments;
       });
       commentsTable.rows.forEach(function (comment) {
-        getImage(comment.imageId, function (image) {
-          if (!image) return;
-          image.comments = image.comments || [];
-          image.comments.push(comment);
+        getImageIndex(comment.imageId, function (i) {
+          if (i === -1) return;
+          if (imagesTable.rows[i].comments === undefined) {
+            imagesTable.rows[i].comments = [];
+          }
+          imagesTable.rows[i].comments.push(comment);
         });
       });
     };
@@ -107,14 +109,13 @@
       return imagesTable.rows;
     }
 
-
     function likePin (imageId ) {
       AuthFactory.getUserName()
         .then(function (user) {
-          getImage(imageId, function (image) {
-            if (!image) return;
-            if (_.contains(image.likes, user.userId)) return;
-            image.likes.push(user.userId);
+          getImageIndex(imageId, function (i) {
+            if (!i) return;
+            if (_.contains(imagesTable.rows[i].likes, user.userId)) return;
+            imagesTable.rows[i].likes.push(user.userId);
             imagesTable
               .update(image);
           });
@@ -125,11 +126,11 @@
     function updateTitle (imageId, title) {
       return AuthFactory.getUserName()
         .then(function (user) {
-          getImage(imageId, function (image) {
-            if (!image) return;
-            image.title = title;
+          getImageIndex(imageId, function (i) {
+            if (!i) return;
+            imagesTable.rows[i].title = title;
             imagesTable
-              .update(image);
+              .update(imagesTable.rows[i]);
           });
           return true;
         });
