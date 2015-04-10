@@ -28,12 +28,13 @@ var socketHandler = function (io, socket) {
       .orderBy({index: r.desc('createdAt')})
       .limit(100)
       .changes()
-       .merge(r.branch(
-         r.row('new_val'),
-         // This should be integrated with the joins table above!
-         { new_val: { user: r.table('users').get(r.row('new_val')('userId')) }},
-         { new_val: { user: null }}
-       ))
+      .filter(r.row('new_val'))
+      .merge(r.branch(
+        r.row('new_val'),
+        // This should be integrated with the joins table above!
+        { new_val: { user: r.table('users').get(r.row('new_val')('userId')) }},
+        { new_val: { user: null }}
+      ))
     }));
 
   socket.on('comments:findById', handlers.findById('comments', [
@@ -51,13 +52,14 @@ var socketHandler = function (io, socket) {
       .orderBy({index: r.desc('createdAt')})
       .limit(100)
       .changes()
-       .merge(function(comment){
-         return r.branch(
-           comment('new_val'),
-           { new_val: { user: r.table('users').get(comment('new_val')('userId')) }},
-           { new_val: { user: null }}
-         );
-       })
+      .filter(r.row('new_val'))
+      .merge(function(comment){
+        return r.branch(
+          comment('new_val'),
+          { new_val: { user: r.table('users').get(comment('new_val')('userId')) }},
+          { new_val: { user: null }}
+        );
+      })
   }));
 
 };

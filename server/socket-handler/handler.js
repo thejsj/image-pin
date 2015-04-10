@@ -47,6 +47,7 @@ var update = function (tableName) {
 
 var _delete = function (tableName) {
   return function(id, cb){
+    console.log('ID: ', id);
     r.table(tableName)
       .get(id)
       .delete()
@@ -69,7 +70,8 @@ var changeStart = function (tableName, socket, opts) {
               .orderBy({index: r.desc('createdAt')})
               .filter(filter)
               .limit(limit)
-              .changes();
+              .changes()
+              .filter(r.row('new_val'))
           })
           .then(function (query) {
             return query.run(conn, handleChange);

@@ -12,13 +12,26 @@
 
     vm.init = function (id) {
       vm.id = id;
+      vm.userId = null;
     };
+
+    // Get user id
+    AuthFactory.getUserName()
+      .then(function (user) {
+        vm.userId = user.userId;
+      });
 
     vm._showComments = false;
 
     vm.showComments = function () {
       console.log('showComments', vm._showComments);
       vm._showComments = !vm._showComments;
+    };
+
+    vm.deleteImage = function (imageId) {
+      window.imagesTable.delete({
+        id: imageId
+      });
     };
 
     vm.isLiked = function (likes, id) {
@@ -36,7 +49,6 @@
     vm.likePin = function (imageId) {
       AuthFactory.getUserName()
         .then(function (user) {
-          console.log(images, imageId);
             getImage(imageId, function (image) {
               if (!image) return;
               // TODO: Add contains

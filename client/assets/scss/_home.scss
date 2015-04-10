@@ -67,6 +67,13 @@
     margin: 4px;
     border: solid 1px $gray;
     border-radius: 5px;
+
+    &:hover {
+      .image-link .delete-button {
+        display: block;
+      }
+    }
+
     .single-comment {
       padding: 10px; 
       border-top: solid 1px $gray;
@@ -85,6 +92,22 @@
       }
     }
     .image-link {
+      position: relative;
+      .delete-button {
+        color: white;
+        background: $red;
+        border-radius: 25px;
+        position: absolute;
+        top: 5px; 
+        text-align: center;
+        width: 25px;
+        height: 25px;
+        right: 5px;
+        padding: 5px; 
+        display: none;
+        font-size: 13px;
+        cursor: pointer;
+      }
       /*cursor: zoom-in;*/
     }
     .image-placeholder-block {

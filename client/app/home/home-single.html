@@ -3,6 +3,9 @@
         <div class='image-block' ng-class='{ "image-not-loaded": (card.fileName === undefined) }'>
         <!--<a class='image-link' ui-sref='single({ id: card.id })' >-->
         <div class='image-link'>
+          <span class='delete-button' ng-click='single.deleteImage(card.id)' ng-class='{ hidden: card.userId !== single.userId }'>
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+          </span>
           <img
             class='main-image'
             ng-src='{{ "/uploads/" + card.fileName  }}'
