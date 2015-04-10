@@ -1,8 +1,8 @@
 <div class="masonry-brick image-container-container" ng-controller="HomeSingleController as single" ng-init="single.init(card.id)"><!-- col-sm-6 col-md-4 col-lg-3-->
     <div class="image-container">
         <div class='image-block' ng-class='{ "image-not-loaded": (card.fileName === undefined) }'>
-        <a class='image-link' ui-sref='single({ id: card.id })' >
-        <!--<div class='image-link'>-->
+        <!--<a class='image-link' ui-sref='single({ id: card.id })' >-->
+        <div class='image-link'>
           <img
             class='main-image'
             ng-src='{{ "/uploads/" + card.fileName  }}'
@@ -11,16 +11,16 @@
             class='image-placeholder-block'
           >
           </div>
-        <!--</div>-->
-        </a>
+        </div>
+        <!--</a>-->
     </div>
     <div class='meta-data'>
         <p>{{ card.title }}</p>
-        <a class='like-button' ng-click='single.likePin(card.id)'>
+        <a class='like-button' ng-click='single.likePin(card.id)' ng-class="{ liked: (card.likes.indexOf(card.userId) !== -1) }">
           <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
           <span class='number-of-likes' ng-if='card.likes.length > 0'>{{ card.likes.length }}</span>
         </a>
-        <a ng-click='single.showComments(card.id)' >
+        <a class='comments-button' ng-click='single.showComments(card.id)' >
           <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
           <span class='number-of-comments' ng-class="{ hidden: (card.comments.length <= 0) }">{{ card.comments.length }}</span>
         </a>

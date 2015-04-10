@@ -21,6 +21,10 @@
       vm._showComments = !vm._showComments;
     };
 
+    vm.isLiked = function (likes, id) {
+      return likes.indexOf(id) !== -1;
+    };
+
     var getImage = function (imageId, cb) {
       var imageIndex = _.findIndex(window.images, {'id': imageId});
       if (imageIndex !== -1) {

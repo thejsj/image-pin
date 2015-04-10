@@ -8,7 +8,7 @@ body, html {
   padding: 0;
 }
 
-.like-button {
+.like-button, .comments-button {
   cursor: pointer; 
   color: #000;
   &:hover {
