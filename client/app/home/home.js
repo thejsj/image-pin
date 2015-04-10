@@ -20,12 +20,13 @@
     vm._showComments = {};
 
     window.imagesTable = imagesTable;
+    window.images = vm.images;
     window.commentsTable = commentsTable;
     window.vm = vm;
 
     var getImage = function (imageId, cb) {
       var imageIndex = _.findIndex(vm.images, {'id': imageId});
-      if (imageIndex) {
+      if (imageIndex !== -1) {
         return cb(vm.images[imageIndex]);
       }
       return cb(false);
@@ -46,17 +47,6 @@
       });
     });
 
-    vm.likePin = function (imageId) {
-      AuthFactory.getUserName()
-        .then(function (user) {
-            getImage(imageId, function (image) {
-              image.likes.push(user.userId);
-              delete image.comments;
-              imagesTable.update(image);
-            });
-          });
-    };
-
     vm.showComments = function (imageId) {
       vm._showComments[imageId] = ((vm._showComments[imageId] === undefined) ? true : !vm._showComments[imageId]);
     };
@@ -68,5 +58,6 @@
         size: 'sm'
       });
     };
+
   }
 })();

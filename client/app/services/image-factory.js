@@ -39,7 +39,8 @@
             userId: userId,
             size: file.size,
             width: dimensions.width,
-            height: dimensions.height
+            height: dimensions.height,
+            likes: []
           }
          });
        })

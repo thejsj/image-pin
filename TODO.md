@@ -1,0 +1,7 @@
+- [ ] Fix comments not beind added
+- [ ] Add CSS class for user how has already liked something
+- [ ] Add anonymous login
+- [ ] Fix listener leak in Sockets
+- [ ] Add styles for button in comments/like
+- [ ] Add Drag and drop for images
+- [ ] Add inline editing for title

@@ -39,6 +39,7 @@ gulp.task('js', function () {
       './client/app/services/comment-factory.js',
       // Controllers
       './client/app/home/home.js',
+      './client/app/home/home-single.js',
       './client/app/home/comment-form.js',
       './client/app/user/user.js',
       './client/app/single/single.js',

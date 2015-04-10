@@ -1,0 +1,47 @@
+<div class="masonry-brick image-container-container" ng-controller="HomeSingleController as single" ng-init="single.init(card.id)"><!-- col-sm-6 col-md-4 col-lg-3-->
+    <div class="image-container">
+        <div class='image-block' ng-class='{ "image-not-loaded": (card.fileName === undefined) }'>
+        <a class='image-link' ui-sref='single({ id: card.id })' >
+        <!--<div class='image-link'>-->
+          <img
+            class='main-image'
+            ng-src='{{ "/uploads/" + card.fileName  }}'
+           />
+          <div 
+            class='image-placeholder-block'
+          >
+          </div>
+        <!--</div>-->
+        </a>
+    </div>
+    <div class='meta-data'>
+        <p>{{ card.title }}</p>
+        <a class='like-button' ng-click='single.likePin(card.id)'>
+          <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+          <span class='number-of-likes' ng-if='card.likes.length > 0'>{{ card.likes.length }}</span>
+        </a>
+        <a ng-click='single.showComments(card.id)' >
+          <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+          <span class='number-of-comments' ng-class="{ hidden: (card.comments.length <= 0) }">{{ card.comments.length }}</span>
+        </a>
+    </div>
+    <div class='image-comments' ng-class="{ hidden: (!single._showComments) }">
+      <div class='single-comment' ng-repeat='comment in card.comments'>
+          <p>{{ comment.user.login }}: {{ comment.text }}</p>
+      </div>
+      <div class='add-comment'>
+        <form ng-submit='form.addComment(card.id)' ng-controller='CommentFormController as form'>
+          <textarea ng-model="textarea" class="form-control" rows="3" placeholder='Add your comment'></textarea>
+          <input type='submit' class='btn btn-default btn-primary' />
+        </form>
+      </div>
+    </div>
+    <a ui-sref='user({ userId: card.user.id })' class='user-link'>
+      <div class='user-box'>
+        <img class='user-avatar' ng-src='{{ card.user.avatarUrl }}' />
+        <p class='user-login'>{{ card.user.login }}</p>
+      </div>
+    </a>
+  </div>
+</div>
+
