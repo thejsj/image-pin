@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  .dockercfg: eyJxdWF5LmlvIjp7InVzZXJuYW1lIjoiaGlwaGlwam9yZ2UiLCJwYXNzd29yZCI6IkJ1M2ZUWnNlckdrYkVVZXJiaGFNIiwiZW1haWwiOiJqb3JnZS5zaWx2YUB0aGVqc2ouY29tIiwiYXV0aCI6ImFHbHdhR2x3YW05eVoyVTZRblV6WmxSYWMyVnlSMnRpUlZWbGNtSm9ZVTA9In19
+kind: Secret
+type: kubernetes.io/dockercfg
+metadata:
+  name: quay-registry

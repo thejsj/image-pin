@@ -1,0 +1,42 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: imagepin
+  name: imagepin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: imagepin
+  template:
+    metadata:
+      labels:
+        app: imagepin
+    spec:
+      containers:
+      - args:
+        - npm
+        - start
+        env:
+        - name: RETHINKDB_PORT_28015_TCP_ADDR
+          value: rethinkdb-db-access
+        - name: RETHINKDB_PORT_28015_TCP_PORT
+          value: "28015"
+        - name: PORT
+          value: "80"
+        - name: NODE_ENV
+          value: default
+        image: quay.io/hiphipjorge/imagepin_server:latest
+        imagePullPolicy: Always
+        name: imagepin
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        volumeMounts:
+        - name: config-vol
+          mountPath: /app/config
+      volumes:
+      - name: config-vol
+        configMap:
+          name: image-pin-config

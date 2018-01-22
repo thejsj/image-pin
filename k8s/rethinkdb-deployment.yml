@@ -1,0 +1,48 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    db: rethinkdb
+  name: rethinkdb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      db: rethinkdb
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        db: rethinkdb
+    spec:
+      containers:
+      - args:
+        - rethinkdb
+        - --bind
+        - all
+        - --cache-size
+        - "100"
+        image: rethinkdb
+        imagePullPolicy: Always
+        name: rethinkdb
+        ports:
+        - containerPort: 8080
+          name: admin
+          protocol: TCP
+        - containerPort: 28015
+          name: driver
+          protocol: TCP
+        - containerPort: 29015
+          name: cluster
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 100m
+            memory: 256Mi
+        volumeMounts:
+        - mountPath: /data/rethinkdb_data
+          name: rethinkdb-storage
+      volumes:
+      - emptyDir:
+          sizeLimit: "0"
+        name: rethinkdb-storage
